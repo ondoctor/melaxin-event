@@ -62,6 +62,8 @@ var SOURCE_CODES = {
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // 자동 수집 끔(버튼 글자·페이지 정보를 메타가 알아서 가져가지 않게). 고급 매칭(전화번호 등)은 init에 아무것도 안 넘겨서 꺼져 있음 — 운영 점검 11-10
+    fbq('set', 'autoConfig', false, PIXEL_ID);
     fbq('init', PIXEL_ID);
     fbq('track', 'PageView');
   }
