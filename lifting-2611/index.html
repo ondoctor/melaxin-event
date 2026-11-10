@@ -102,8 +102,11 @@
   <section aria-labelledby="t-map">
     <h2 id="t-map">오시는 길</h2>
     <div class="map">
+      <picture>
+      <source srcset="../common/map.webp" type="image/webp">
       <img src="../common/map.png" alt="닥터멜락신의원 약도 — 강남역 3번 출구에서 도보 1분, 강남대로 376 9층" width="1080" height="900" loading="lazy"
-           onerror="this.parentNode.classList.add('nomap')">
+           onerror="this.closest('.map').classList.add('nomap')">
+      </picture>
       <div class="map-empty">약도 준비 중이에요</div>
     </div>
     <p class="addr">서울 강남구 강남대로 376, 9층</p>
