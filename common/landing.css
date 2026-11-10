@@ -152,3 +152,5 @@ body.has-next .bar .hide-when-next { display: none; }
 .incl li { padding: 2px 0; }
 .incl li::before { content: "✓ "; font-weight: 800; }
 .incl li.no::before { content: "✕ "; color: var(--ink-muted); }
+.legal .privacy { margin-top: 10px; }
+.legal .privacy a { color: var(--ink-muted); text-decoration: underline; }

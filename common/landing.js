@@ -6,18 +6,49 @@
 
 // 메타 픽셀 — 회사 픽셀 ID를 받으면 아래 따옴표 안에 넣어요(모든 랜딩에 같이 적용). 비어 있으면 픽셀을 불러오지 않아요.
 var PIXEL_ID = "";
+// 개인정보 처리방침 주소(https://…) — 넣으면 모든 랜딩 맨 아래에 링크가 생겨요. 비어 있으면 안 보여요.
+var PRIVACY_URL = "";
+
+// 카톡 첫 문구 끝에 붙는 출처 코드 — 광고 주소 꼬리표(utm_source·utm_content)로 만들어요.
+//   예: ?utm_source=ig&utm_content=a_guide  →  '리프팅 이벤트 보고 왔어요 (IG-A)'
+//   utm_source는 아래 표의 두 글자로(표에 없으면 앞 세 글자), utm_content는 '_' 앞부분(최대 3글자). 꼬리표가 없으면 문구 그대로
+var SOURCE_CODES = {
+  ig: "IG", instagram: "IG", insta_profile: "IP",
+  fb: "FB", facebook: "FB", meta: "MT", msg: "MS", an: "AN",
+  th: "TH", threads: "TH", tiktok: "TT", youtube: "YT",
+  kakao: "KC", kakao_ch: "KC", naver: "NV"
+};
 
 (function () {
   var body = document.body;
   var KAKAO_TEXT = body.dataset.kakaoText || "";
+  var params = new URLSearchParams(location.search);
+  var LANDING = (location.pathname.match(/([^\/]+)\/[^\/]*$/) || [])[1] || "";
+
+  function clean(v, n) { return (v || "").replace(/[^A-Za-z0-9]/g, "").slice(0, n).toUpperCase(); }
+  function sourceTag() {
+    var src = (params.get("utm_source") || "").toLowerCase();
+    var code = SOURCE_CODES[src] || clean(src, 3);   // 표에 없으면 세 글자 — 표의 두 글자 코드와 안 겹침
+    if (!code) return "";
+    var ad = clean((params.get("utm_content") || "").split(/[_-]/)[0], 3);
+    return " (" + code + (ad ? "-" + ad : "") + ")";
+  }
+  if (KAKAO_TEXT) KAKAO_TEXT += sourceTag();
+
+  // 개인정보 처리방침 링크 자리
+  var legal = document.querySelector(".legal");
+  if (legal && /^https:\/\//.test(PRIVACY_URL)) {
+    var p = document.createElement("p"), a = document.createElement("a");
+    a.href = PRIVACY_URL; a.target = "_blank"; a.rel = "noopener"; a.textContent = "개인정보 처리방침";
+    p.className = "privacy"; p.appendChild(a); legal.appendChild(p);
+  }
 
   // 이벤트 끝 날짜가 지났으면 끝 안내로
   if (body.dataset.ends && Date.now() >= Date.parse(body.dataset.ends + "T00:00:00+09:00")) {
     body.classList.add("ended");
     KAKAO_TEXT = "";                     // 끝난 이벤트 문구는 복사하지 않음
     // 다른 랜딩이 진행 중이면(common/current.js) '이달 이벤트 보기' 버튼을 켜고 광고 꼬리표를 붙여 연결
-    var here = (location.pathname.match(/([^\/]+\/)[^\/]*$/) || [])[1];
-    if (window.CURRENT_LANDING && CURRENT_LANDING !== here) {
+    if (window.CURRENT_LANDING && CURRENT_LANDING !== LANDING + "/") {
       body.classList.add("has-next");
       document.querySelectorAll(".js-next").forEach(function (a) {
         a.href = "../" + CURRENT_LANDING + location.search;
@@ -34,8 +65,14 @@ var PIXEL_ID = "";
     fbq('init', PIXEL_ID);
     fbq('track', 'PageView');
   }
+  // 버튼 이벤트에 랜딩 이름·광고 꼬리표를 같이 실음. 병원 사이트는 메타가 이 값들을 지울 수 있음 → 그래도 이벤트 수는 남음
   function track(name, label) {
-    if (window.fbq) fbq('track', name, { content_name: label });
+    if (!window.fbq) return;
+    var data = { content_name: label, content_category: LANDING };
+    ["utm_source", "utm_campaign", "utm_content"].forEach(function (k) {
+      if (params.get(k)) data[k] = params.get(k).slice(0, 60);
+    });
+    fbq('track', name, data);
   }
 
   var toast = document.querySelector('.toast');
