@@ -47,6 +47,8 @@
     display: flex; flex-direction: column;
     min-height: min(125vw, 600px);
     background: #140d09 url("assets/hero-silk.jpg") center top / cover no-repeat;
+    /* 실크 끝이 기간 줄 뒤에 걸려 흐려지는 것 막기 — 어둡게 덮기 한 겹(디자인 11-10) */
+    background-image: linear-gradient(180deg, rgba(30,20,14,0) 0%, rgba(30,20,14,.55) 30%, rgba(30,20,14,.35) 48%, rgba(30,20,14,0) 68%), url("assets/hero-silk.jpg");
     color: #f6ecdd;
     padding: 24px 16px 20px;
   }
@@ -65,7 +67,7 @@
   .row .name { font-size: 16px; font-weight: 700; line-height: 1.35; }
   .row .regular-line { display: block; margin-top: 3px; font-size: 13px; color: #2a1f18; font-weight: 500; }
   .row .price { font-size: 48px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -.02em; }
-  .price-box .side { margin: 0; padding: 14px 0 4px; font-size: 13px; color: rgba(42, 31, 24, .9); font-weight: 500; }
+  .price-box .side { margin: 0; padding: 14px 0 4px; font-size: 13px; color: rgba(42, 31, 24, .9); font-weight: 500; text-wrap: balance; }
   .price-box .cond { margin: 0; padding: 0 0 14px; font-size: 12px; color: rgba(42, 31, 24, .75); }
 
   section { padding: 32px 20px; }
