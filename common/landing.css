@@ -127,7 +127,28 @@ h2 { margin: 0 0 16px; font-size: 20px; font-weight: 800; }
 .ended-only { display: none; }
 body.ended .event-only { display: none !important; }
 body.ended .ended-only { display: block; }
+/* 끝났고 다른 랜딩이 진행 중이면: '이달 이벤트 보기'를 켜고, 아래 고정 바의 전화 칸과 자리를 바꿈(전화는 본문에 그대로) */
+.next-only { display: none !important; }
+body.has-next .next-only { display: flex !important; }
+body.has-next .bar .hide-when-next { display: none; }
+.btn-next { background: #140d09; color: #f6ecdd; }
+.ended-box .btn-next { margin-top: 18px; background: #f6ecdd; color: #140d09; }
 .ended-box { padding: 40px 20px 32px; background: #140d09; color: #f6ecdd; }
 .ended-box h1 { margin: 14px 0 8px; font-size: 28px; font-weight: 800; line-height: 1.3; }
 .ended-box p { margin: 0; font-size: 15px; color: rgba(246, 236, 221, .92); }
 
+
+/* ── 선택 칸(새 랜딩 틀 _template에 있음 — 값이 정해진 칸만 남기고 나머지는 지움) ── */
+/* 가격 바로 아래 조건 불릿: 기간·부가세·1인 1회 등 */
+.conds { margin: 0; padding: 12px 0 2px 18px; font-size: 13px; color: #2a1f18; font-weight: 500; }
+.conds li { padding: 1px 0; }
+/* 시술 요약 칸: 시술 시간·마취·회복 등(숫자는 의료진 확인 뒤) */
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+.facts li { background: #fff; border-radius: 12px; padding: 12px 8px; text-align: center; }
+.facts b { display: block; font-size: 15px; font-weight: 800; }
+.facts span { display: block; margin-top: 2px; font-size: 12px; color: var(--ink-muted); }
+/* 포함·불포함 목록 */
+.incl { margin: 16px 0 0; padding: 14px 16px; background: #fff; border-radius: 14px; list-style: none; font-size: 14px; }
+.incl li { padding: 2px 0; }
+.incl li::before { content: "✓ "; font-weight: 800; }
+.incl li.no::before { content: "✕ "; color: var(--ink-muted); }

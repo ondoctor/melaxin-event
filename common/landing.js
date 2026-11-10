@@ -2,6 +2,7 @@
 // 랜딩마다 다른 값은 그 폴더 index.html의 <body> 칸으로 정해요:
 //   data-ends="2026-12-01"           이 날(한국 시간 0시)부터 가격·시술 칸을 숨기고 '이벤트 끝' 안내를 보임
 //   data-kakao-text="리프팅 이벤트 보고 왔어요"   카톡 버튼을 누르면 복사되는 첫 문구
+// 끝난 뒤 다른 랜딩이 진행 중이면(common/current.js) '이달 이벤트 보기' 버튼이 켜져요(class js-next)
 
 // 메타 픽셀 — 회사 픽셀 ID를 받으면 아래 따옴표 안에 넣어요(모든 랜딩에 같이 적용). 비어 있으면 픽셀을 불러오지 않아요.
 var PIXEL_ID = "";
@@ -14,6 +15,14 @@ var PIXEL_ID = "";
   if (body.dataset.ends && Date.now() >= Date.parse(body.dataset.ends + "T00:00:00+09:00")) {
     body.classList.add("ended");
     KAKAO_TEXT = "";                     // 끝난 이벤트 문구는 복사하지 않음
+    // 다른 랜딩이 진행 중이면(common/current.js) '이달 이벤트 보기' 버튼을 켜고 광고 꼬리표를 붙여 연결
+    var here = (location.pathname.match(/([^\/]+\/)[^\/]*$/) || [])[1];
+    if (window.CURRENT_LANDING && CURRENT_LANDING !== here) {
+      body.classList.add("has-next");
+      document.querySelectorAll(".js-next").forEach(function (a) {
+        a.href = "../" + CURRENT_LANDING + location.search;
+      });
+    }
   }
 
   if (PIXEL_ID) {

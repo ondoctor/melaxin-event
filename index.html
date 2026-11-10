@@ -5,12 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>닥터멜락신의원 강남</title>
-<script>
-  // 맨 위 주소(event.melaxin.kr/)로 오면 지금 진행 중인 랜딩으로 넘겨요.
-  // 새 이벤트를 시작하면 아래 따옴표 안 폴더 이름만 바꿔요. 광고 꼬리표(?utm_…)는 그대로 따라가요.
-  var CURRENT = "lifting-2611/";
-  location.replace(CURRENT + location.search + location.hash);
-</script>
+<!-- 맨 위 주소로 오면 지금 진행 중인 랜딩으로 넘겨요. 폴더 이름은 common/current.js 한 곳에서 바꿔요. 광고 꼬리표(?utm_…)는 그대로 따라가요 -->
+<script src="common/current.js"></script>
+<script>location.replace(CURRENT_LANDING + location.search + location.hash);</script>
 <noscript><meta http-equiv="refresh" content="0; url=lifting-2611/"></noscript>
 </head>
 <body>
