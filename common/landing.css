@@ -1,0 +1,133 @@
+/* event.melaxin.kr 랜딩 공통 모양 — 모든 랜딩 폴더가 ../common/landing.css 로 씀.
+ 여기를 고치면 모든 랜딩이 같이 바뀌어요. 랜딩 하나만 다른 건 그 폴더 index.html의 <style>에. */
+:root {
+  --panel: #f3ece4;       /* 베이지 판 */
+  --paper: #faf7f3;       /* 페이지 바탕 */
+  --ink: #2a1f18;         /* 본문 글자 */
+  --ink-muted: #6b5d52;   /* 보조 글자 (바탕 위 5:1 이상) */
+  --line: rgba(42, 31, 24, .16);
+  --kakao: #fee500;
+  --kakao-ink: #191600;
+  --focus: #0043da;
+  --bar-h: 76px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  line-height: 1.55;
+  word-break: keep-all;
+  padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom));
+}
+.wrap { max-width: 480px; margin: 0 auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.won { font-size: .42em; font-weight: 700; margin-left: .06em; }
+s.regular { text-decoration-thickness: 1.5px; }
+
+/* 맨 위 가격 카드 — 광고 가격표 카드(멜락신 캐러셀 v3.4)와 같은 모양 */
+.hero {
+  position: relative;
+  display: flex; flex-direction: column;
+  min-height: min(125vw, 600px);
+  /* 배경 그림은 랜딩마다 그 폴더 index.html의 <style>에서 background-image로 정함 */
+  background: #140d09 center top / cover no-repeat;
+  color: #f6ecdd;
+  padding: 24px 16px 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand img { height: 16px; width: auto; display: block; }
+.brand span { font-size: 12px; color: rgba(246, 236, 221, .85); font-weight: 500; }
+.hero h1 { margin: 14px 0 0; font-size: 38px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; }
+.hero .period { margin: 8px 0 0; font-size: 15px; font-weight: 500; color: rgba(246, 236, 221, .92); }
+.price-box {
+  margin-top: auto;
+  background: rgba(251, 245, 236, .78);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border-radius: 12px; padding: 0 18px; color: #2a1f18;
+}
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 0; border-bottom: 1px solid rgba(42, 31, 24, .18); }
+.row .name { font-size: 16px; font-weight: 700; line-height: 1.35; }
+.row .regular-line { display: block; margin-top: 3px; font-size: 13px; color: #2a1f18; font-weight: 500; }
+.row .price { font-size: 48px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -.02em; }
+.price-box .side { margin: 0; padding: 14px 0 4px; font-size: 13px; color: rgba(42, 31, 24, .9); font-weight: 500; text-wrap: balance; }
+.price-box .cond { margin: 0; padding: 0 0 14px; font-size: 12px; color: rgba(42, 31, 24, .75); }
+
+section { padding: 32px 20px; }
+h2 { margin: 0 0 16px; font-size: 20px; font-weight: 800; }
+
+/* ③ 시술 짧은 안내 */
+.about { background: var(--panel); }
+.about p { margin: 0 0 14px; font-size: 15px; }
+.about dl { margin: 0; }
+.about dt { font-size: 15px; font-weight: 700; margin-top: 12px; }
+.about dd { margin: 2px 0 0; font-size: 14px; color: var(--ink-muted); }
+
+/* ④ 상담 버튼 */
+.btns { display: grid; gap: 10px; }
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 56px; padding: 0 16px; border-radius: 14px;
+  font-size: 17px; font-weight: 700; text-decoration: none; border: 0; cursor: pointer;
+  font-family: inherit;
+}
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn-kakao { background: var(--kakao); color: var(--kakao-ink); }
+.btn-phone { background: var(--ink); color: #fff; }
+.btn-line { background: #fff; color: var(--ink); border: 1.5px solid var(--ink); min-height: 50px; font-size: 15px; }
+.hours { margin: 16px 0 0; padding: 16px; background: #fff; border-radius: 14px; font-size: 14px; }
+.hours table { width: 100%; border-collapse: collapse; }
+.hours th { text-align: left; font-weight: 600; padding: 3px 0; width: 7em; color: var(--ink-muted); }
+.hours td { padding: 3px 0; }
+.hours .off { margin: 6px 0 0; font-weight: 600; }
+.copy-hint { margin: 10px 2px 0; font-size: 13px; color: var(--ink-muted); }
+
+/* ⑤ 오시는 길 */
+.map { margin: 0 0 16px; border-radius: 14px; overflow: hidden; background: var(--panel); }
+.map img { display: block; width: 100%; height: auto; }
+.map .map-empty { display: none; padding: 40px 16px; text-align: center; color: var(--ink-muted); font-size: 14px; }
+.map.nomap img { display: none; }
+.map.nomap .map-empty { display: block; }
+.addr { margin: 0; font-size: 16px; font-weight: 700; }
+.addr-sub { margin: 4px 0 0; font-size: 14px; color: var(--ink-muted); }
+.way { margin: 12px 0 16px; padding: 0; list-style: none; font-size: 15px; }
+.way li { padding: 2px 0; }
+.btns.two { grid-template-columns: 1fr 1fr; }
+
+/* ⑥ 조건·부작용 */
+.legal { padding: 24px 20px 32px; font-size: 13px; color: var(--ink-muted); border-top: 1px solid var(--line); }
+.legal p { margin: 0 0 6px; }
+.legal .warn { color: var(--ink); font-weight: 600; font-size: 14px; }
+.legal .org { margin-top: 16px; }
+
+/* 아래 고정 버튼 */
+.bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  background: rgba(250, 247, 243, .96);
+  border-top: 1px solid var(--line);
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+}
+.bar .btns { max-width: 480px; margin: 0 auto; grid-template-columns: 1.4fr 1fr; }
+.bar .btn { min-height: 54px; font-size: 16px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--bar-h) + 16px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(10px); opacity: 0; pointer-events: none;
+  background: var(--ink); color: #fff; font-size: 14px; padding: 12px 16px; border-radius: 12px;
+  width: max-content; max-width: calc(100% - 32px); text-align: center;
+  transition: opacity .2s, transform .2s; z-index: 20;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+
+/* 이벤트가 끝나면(body.ended — landing.js가 data-ends 날짜를 보고 붙임) 가격·시술 칸을 숨기고 끝 안내를 보임 */
+.ended-only { display: none; }
+body.ended .event-only { display: none !important; }
+body.ended .ended-only { display: block; }
+.ended-box { padding: 40px 20px 32px; background: #140d09; color: #f6ecdd; }
+.ended-box h1 { margin: 14px 0 8px; font-size: 28px; font-weight: 800; line-height: 1.3; }
+.ended-box p { margin: 0; font-size: 15px; color: rgba(246, 236, 221, .92); }
+
