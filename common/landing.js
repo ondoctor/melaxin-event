@@ -5,10 +5,15 @@
 //     kakao·wechat = 링크로 미리 채우기가 안 돼서 '복사 + 안내' / line-jp·line-tw·whatsapp = 채팅 입력칸에 바로 들어감(아래 CHANNELS)
 // 끝난 뒤 다른 랜딩이 진행 중이면(common/current.js) '이달 이벤트 보기' 버튼이 켜져요(class js-next)
 
-// 메타 픽셀 — 회사 픽셀 ID를 받으면 아래 따옴표 안에 넣어요(모든 랜딩에 같이 적용). 비어 있으면 픽셀을 불러오지 않아요.
-var PIXEL_ID = "";
-// 개인정보 처리방침 주소(https://…) — 넣으면 모든 랜딩 맨 아래에 링크가 생겨요. 비어 있으면 안 보여요.
-var PRIVACY_URL = "";
+// 메타 픽셀 — '닥터멜락신의원 강남 웹'(11-11 PM이 만듦, 고급 매칭·Core 설정·자동 이벤트 해제). 모든 랜딩에 같이 적용, 비우면 픽셀을 불러오지 않아요.
+var PIXEL_ID = "1490389859603501";
+// 개인정보 처리방침 — 홈페이지(디하우스, 11-11). 랜딩 언어(<html lang>)에 맞는 주소·이름으로 맨 아래 링크가 생겨요. 표에 없는 언어는 영어
+var PRIVACY = {
+  ko: ["https://drmelaxin-clinic.com/privacy-policy", "개인정보 처리방침"],
+  en: ["https://drmelaxin-clinic.com/en/privacy-policy", "Privacy Policy"],
+  ja: ["https://drmelaxin-clinic.com/ja/privacy-policy", "個人情報処理方針"],
+  zh: ["https://drmelaxin-clinic.com/zh/privacy-policy", "个人信息处理方针"]
+};
 
 // 카톡 첫 문구 끝에 붙는 출처 코드 — 광고 주소 꼬리표(utm_source·utm_content)로 만들어요.
 //   예: ?utm_source=ig&utm_content=a_guide  →  '리프팅 이벤트 보고 왔어요 (IG-A)'
@@ -51,9 +56,10 @@ var CHANNELS = {
 
   // 개인정보 처리방침 링크 자리
   var legal = document.querySelector(".legal");
-  if (legal && /^https:\/\//.test(PRIVACY_URL)) {
+  var privacy = PRIVACY[(document.documentElement.lang || "").slice(0, 2).toLowerCase()] || PRIVACY.en;
+  if (legal && privacy) {
     var p = document.createElement("p"), a = document.createElement("a");
-    a.href = PRIVACY_URL; a.target = "_blank"; a.rel = "noopener"; a.textContent = "개인정보 처리방침";
+    a.href = privacy[0]; a.target = "_blank"; a.rel = "noopener"; a.textContent = privacy[1];
     p.className = "privacy"; p.appendChild(a); legal.appendChild(p);
   }
 
