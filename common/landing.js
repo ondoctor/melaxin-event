@@ -1,7 +1,8 @@
 // event.melaxin.kr 랜딩 공통 동작 — 모든 랜딩 폴더가 ../common/landing.js 로 씀.
 // 랜딩마다 다른 값은 그 폴더 index.html의 <body> 칸으로 정해요:
 //   data-ends="2026-12-01"           이 날(한국 시간 0시)부터 가격·시술 칸을 숨기고 '이벤트 끝' 안내를 보임
-//   data-kakao-text="리프팅 이벤트 보고 왔어요"   카톡 버튼을 누르면 복사되는 첫 문구
+//   data-msg-kakao="리프팅 이벤트 보고 왔어요"   상담 버튼(class js-chat, data-ch=채널)을 누를 때 보내질 첫 문구 — 채널마다 data-msg-<채널>
+//     kakao·wechat = 링크로 미리 채우기가 안 돼서 '복사 + 안내' / line-jp·line-tw·whatsapp = 채팅 입력칸에 바로 들어감(아래 CHANNELS)
 // 끝난 뒤 다른 랜딩이 진행 중이면(common/current.js) '이달 이벤트 보기' 버튼이 켜져요(class js-next)
 
 // 메타 픽셀 — 회사 픽셀 ID를 받으면 아래 따옴표 안에 넣어요(모든 랜딩에 같이 적용). 비어 있으면 픽셀을 불러오지 않아요.
@@ -19,9 +20,22 @@ var SOURCE_CODES = {
   kakao: "KC", kakao_ch: "KC", naver: "NV"
 };
 
+// 상담 채널 — 주소는 운영 리소스 '닥터멜락신_상담채널.md'(버튼 href에도 같은 주소 = 스크립트가 안 돌아도 열림)
+//   prefill: 이 주소 뒤에 첫 문구를 붙이면 입력칸에 채워짐(LINE 공식 문서 'LINE URL scheme' oaMessage, WhatsApp click to chat)
+//   appOnly: 휴대폰 LINE 앱에서만 됨(PC는 미리 채우기 없이 버튼 주소로 — lin.ee는 PC에서 QR을 보여 줌)
+//   copied/nocopy: 미리 채우기가 안 되는 채널의 복사 안내({t} = 첫 문구, 표에 없는 채널은 카톡 안내를 씀)
+var CHANNELS = {
+  "kakao":    { copied: "‘{t}’ 복사됨 — 채팅창에 붙여 넣어 주세요", nocopy: "채팅창에 ‘{t}’라고 보내 주세요" },
+  "line-jp":  { prefill: "https://line.me/R/oaMessage/%40010claqq/?", appOnly: true },
+  "line-tw":  { prefill: "https://line.me/R/oaMessage/%40909lnxrc/?", appOnly: true },
+  "wechat":   { copied: "已复制「{t}」— 请粘贴到聊天窗口发送", nocopy: "请在聊天窗口发送「{t}」" },
+  "whatsapp": { prefill: "https://wa.me/821021903760?text=" }
+};
+
 (function () {
   var body = document.body;
-  var KAKAO_TEXT = body.dataset.kakaoText || "";
+  var ENDED = false;
+  var PHONE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
   var params = new URLSearchParams(location.search);
   var LANDING = (location.pathname.match(/([^\/]+)\/[^\/]*$/) || [])[1] || "";
 
@@ -33,7 +47,7 @@ var SOURCE_CODES = {
     var ad = clean((params.get("utm_content") || "").split(/[_-]/)[0], 3);
     return " (" + code + (ad ? "-" + ad : "") + ")";
   }
-  if (KAKAO_TEXT) KAKAO_TEXT += sourceTag();
+  var TAG = sourceTag();
 
   // 개인정보 처리방침 링크 자리
   var legal = document.querySelector(".legal");
@@ -46,7 +60,7 @@ var SOURCE_CODES = {
   // 이벤트 끝 날짜가 지났으면 끝 안내로
   if (body.dataset.ends && Date.now() >= Date.parse(body.dataset.ends + "T00:00:00+09:00")) {
     body.classList.add("ended");
-    KAKAO_TEXT = "";                     // 끝난 이벤트 문구는 복사하지 않음
+    ENDED = true;                        // 끝난 이벤트 문구는 넣지 않고 채팅만 엶
     // 다른 랜딩이 진행 중이면(common/current.js) '이달 이벤트 보기' 버튼을 켜고 광고 꼬리표를 붙여 연결
     if (window.CURRENT_LANDING && CURRENT_LANDING !== LANDING + "/") {
       body.classList.add("has-next");
@@ -103,21 +117,21 @@ var SOURCE_CODES = {
     return ok;
   }
 
-  document.querySelectorAll('.js-kakao').forEach(function (a) {
+  document.querySelectorAll('.js-chat').forEach(function (a) {
     a.addEventListener('click', function (ev) {
-      track('Contact', 'kakao');
-      if (!KAKAO_TEXT) return;           // 첫 문구가 없으면 그냥 채팅으로
+      var ch = a.dataset.ch, conf = CHANNELS[ch] || CHANNELS.kakao;
+      track('Contact', ch);
+      var msg = ENDED ? "" : (body.getAttribute('data-msg-' + ch) || "");
+      if (!msg || (conf.appOnly && !PHONE)) return;   // 첫 문구가 없거나 PC의 LINE이면 그냥 버튼 주소로
+      msg += TAG;
       ev.preventDefault();
+      if (conf.prefill) { location.href = conf.prefill + encodeURIComponent(msg); return; }
       var href = a.href;
-      copyText(KAKAO_TEXT).then(function (ok) {
-        showToast(ok ? '‘' + KAKAO_TEXT + '’ 복사됨 — 채팅창에 붙여 넣어 주세요'
-                     : '채팅창에 ‘' + KAKAO_TEXT + '’라고 보내 주세요');
+      copyText(msg).then(function (ok) {
+        showToast((ok ? conf.copied : conf.nocopy).split('{t}').join(msg));
         setTimeout(function () { location.href = href; }, 1100);
       });
     });
-  });
-  document.querySelectorAll('.js-phone').forEach(function (a) {
-    a.addEventListener('click', function () { track('Contact', 'phone'); });
   });
   document.querySelectorAll('.js-map').forEach(function (a) {
     a.addEventListener('click', function () { track('FindLocation', a.dataset.map); });

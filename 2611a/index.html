@@ -20,7 +20,9 @@
 </style>
 </head>
 <!-- 11월 리프팅 (2026-11-01 ~ 11-30). data-ends 날부터 가격·시술 칸이 숨고 아래 '이벤트 끝' 안내가 보여요 -->
-<body data-ends="2026-12-01" data-kakao-text="리프팅 이벤트 보고 왔어요">
+<body data-ends="2026-12-01" data-msg-kakao="리프팅 이벤트 보고 왔어요"
+  data-msg-line-jp="リフトアップのイベントを見てご連絡しました" data-msg-line-tw="我看到拉提活動，想諮詢一下"
+  data-msg-wechat="我看到提拉活动，想咨询一下" data-msg-whatsapp="Hi, I saw the lifting event and would like to ask.">
 <div class="wrap">
 
   <!-- ①② 이벤트 가격·가격표 -->
@@ -31,7 +33,7 @@
       <span>닥터멜락신의원 강남</span>
     </div>
     <h1>11월 리프팅 이벤트가 끝났어요</h1>
-    <p>지금 가격과 시술 상담은 카카오톡·전화로 문의해 주세요.</p>
+    <p>지금 가격과 시술 상담은 카카오톡·LINE·WeChat·WhatsApp으로 문의해 주세요.</p>
     <a class="btn btn-next next-only js-next" href="../">이달 이벤트 보기</a>
   </header>
 
@@ -58,7 +60,7 @@
         <div class="price">29<span class="won">만원</span></div>
       </div>
       <p class="side">시술 후 붓기·붉어짐·멍 등이 생길 수 있으며 개인에 따라 다릅니다.</p>
-      <p class="cond">상담은 아래 카카오톡·전화로</p>
+      <p class="cond">상담은 아래 메신저로</p>
     </div>
   </header>
 
@@ -119,15 +121,12 @@
   <!-- ④ 상담 버튼 -->
   <section aria-labelledby="t-contact">
     <h2 id="t-contact">상담하기</h2>
-    <div class="btns">
-      <a class="btn btn-kakao js-kakao" href="https://pf.kakao.com/_nsCJX/chat">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.5 2 10.82c0 2.8 1.88 5.26 4.7 6.64l-.96 3.5c-.08.3.26.54.52.37l4.18-2.77c.51.06 1.03.1 1.56.1 5.52 0 10-3.5 10-7.84S17.52 3 12 3z"/></svg>
-        카카오톡으로 상담하기
-      </a>
-      <a class="btn btn-phone js-phone" href="tel:07041948258">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
-        전화하기 070-4194-8258
-      </a>
+    <div class="btns chats">
+      <a class="btn btn-kakao js-chat" data-ch="kakao" href="https://pf.kakao.com/_nsCJX/chat"><svg aria-hidden="true"><use href="../common/icons.svg#kakao"/></svg>카카오톡으로 상담하기</a>
+      <a class="btn btn-chat js-chat" data-ch="line-jp" href="https://lin.ee/p9285r6" lang="ja"><svg aria-hidden="true"><use href="../common/icons.svg#line"/></svg>LINE 日本</a>
+      <a class="btn btn-chat js-chat" data-ch="line-tw" href="https://lin.ee/Y2pbDqz" lang="zh-Hant"><svg aria-hidden="true"><use href="../common/icons.svg#line"/></svg>LINE 台灣</a>
+      <a class="btn btn-chat js-chat" data-ch="wechat" href="https://work.weixin.qq.com/ct/wcde09dc9f9fd2a2a2ca33386d3ffbd13e98" lang="zh-Hans"><svg aria-hidden="true"><use href="../common/icons.svg#wechat"/></svg>WeChat 微信</a>
+      <a class="btn btn-chat js-chat" data-ch="whatsapp" href="https://wa.me/821021903760" lang="en"><svg aria-hidden="true"><use href="../common/icons.svg#whatsapp"/></svg>WhatsApp</a>
     </div>
     <p class="copy-hint event-only">카카오톡 버튼을 누르면 ‘리프팅 이벤트 보고 왔어요’가 복사돼요. 채팅창에 붙여 넣어 보내 주세요.</p>
     <div class="hours">
@@ -155,7 +154,7 @@
     <p class="addr-sub">(역삼동, 8258빌딩)</p>
     <ul class="way">
       <li>강남역 3번 출구로 나와 뒤돌아 도보 1분</li>
-      <li>주차는 전화로 문의해 주세요(070-4194-8258)</li>
+      <li>주차는 메신저로 문의해 주세요</li>
     </ul>
     <div class="btns two">
       <a class="btn btn-line js-map" data-map="naver_map" href="https://map.naver.com/p/entry/place/2044823525" target="_blank" rel="noopener">네이버 지도</a>
@@ -168,15 +167,18 @@
     <p class="warn event-only">시술 후 붓기·붉어짐·멍 등이 생길 수 있으며 개인에 따라 다릅니다.</p>
     <p class="event-only">표시 가격은 부가세 별도이며, 2026년 11월 30일(월)까지 적용돼요.</p>
     <p>시술 여부와 범위는 진료 상담에서 의료진이 정해요.</p>
-    <p class="org">닥터멜락신의원 · 서울 강남구 강남대로 376, 9층 · 대표전화 070-4194-8258</p>
+    <p class="org">닥터멜락신의원 · 서울 강남구 강남대로 376, 9층</p>
   </footer>
 </div>
 
 <!-- 아래 고정 버튼 -->
-<nav class="bar" aria-label="상담">
+<nav class="bar" aria-label="메신저로 상담하기">
   <div class="btns">
-    <a class="btn btn-kakao js-kakao" href="https://pf.kakao.com/_nsCJX/chat">카카오톡 상담</a>
-    <a class="btn btn-phone js-phone hide-when-next" href="tel:07041948258">전화하기</a>
+    <a class="btn btn-kakao js-chat" data-ch="kakao" href="https://pf.kakao.com/_nsCJX/chat"><svg aria-hidden="true"><use href="../common/icons.svg#kakao"/></svg>카카오톡</a>
+    <a class="btn btn-chat js-chat" data-ch="line-jp" href="https://lin.ee/p9285r6" lang="ja"><svg aria-hidden="true"><use href="../common/icons.svg#line"/></svg>LINE 日本</a>
+    <a class="btn btn-chat js-chat" data-ch="line-tw" href="https://lin.ee/Y2pbDqz" lang="zh-Hant"><svg aria-hidden="true"><use href="../common/icons.svg#line"/></svg>LINE 台灣</a>
+    <a class="btn btn-chat js-chat" data-ch="wechat" href="https://work.weixin.qq.com/ct/wcde09dc9f9fd2a2a2ca33386d3ffbd13e98" lang="zh-Hans"><svg aria-hidden="true"><use href="../common/icons.svg#wechat"/></svg>WeChat</a>
+    <a class="btn btn-chat js-chat" data-ch="whatsapp" href="https://wa.me/821021903760" lang="en"><svg aria-hidden="true"><use href="../common/icons.svg#whatsapp"/></svg>WhatsApp</a>
     <a class="btn btn-next next-only js-next" href="../">이달 이벤트 보기</a>
   </div>
 </nav>

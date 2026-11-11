@@ -76,7 +76,10 @@ h2 { margin: 0 0 16px; font-size: 20px; font-weight: 800; }
 }
 .btn svg { width: 22px; height: 22px; flex: none; }
 .btn-kakao { background: var(--kakao); color: var(--kakao-ink); }
-.btn-phone { background: var(--ink); color: #fff; }
+/* 다른 메신저(LINE·WeChat·WhatsApp) — 흰 바탕 + 진한 테두리, 로고만 회사 색(common/icons.svg) */
+.btn-chat { background: #fff; color: var(--ink); border: 1.5px solid var(--ink); font-size: 15px; gap: 7px; padding: 0 10px; }
+.btns.chats { grid-template-columns: 1fr 1fr; }
+.btns.chats .btn-kakao { grid-column: 1 / -1; }
 .btn-line { background: #fff; color: var(--ink); border: 1.5px solid var(--ink); min-height: 50px; font-size: 15px; }
 .hours { margin: 16px 0 0; padding: 16px; background: #fff; border-radius: 14px; font-size: 14px; }
 .hours table { width: 100%; border-collapse: collapse; }
@@ -110,8 +113,10 @@ h2 { margin: 0 0 16px; font-size: 20px; font-weight: 800; }
   border-top: 1px solid var(--line);
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
 }
-.bar .btns { max-width: 480px; margin: 0 auto; grid-template-columns: 1.4fr 1fr; }
-.bar .btn { min-height: 54px; font-size: 16px; }
+/* 아래 고정 바 = 상담 채널 다섯 개(로고 위 + 짧은 이름 아래) */
+.bar .btns { max-width: 480px; margin: 0 auto; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.bar .btn { min-height: 54px; flex-direction: column; gap: 3px; padding: 0 2px; border-radius: 12px; font-size: 11px; font-weight: 700; line-height: 1.1; white-space: nowrap; letter-spacing: -.01em; }
+.bar .btn svg { width: 22px; height: 22px; }
 
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--bar-h) + 16px + env(safe-area-inset-bottom));
@@ -127,10 +132,11 @@ h2 { margin: 0 0 16px; font-size: 20px; font-weight: 800; }
 .ended-only { display: none; }
 body.ended .event-only { display: none !important; }
 body.ended .ended-only { display: block; }
-/* 끝났고 다른 랜딩이 진행 중이면: '이달 이벤트 보기'를 켜고, 아래 고정 바의 전화 칸과 자리를 바꿈(전화는 본문에 그대로) */
+/* 끝났고 다른 랜딩이 진행 중이면: '이달 이벤트 보기'를 켜고, 아래 고정 바에선 채널 줄 위에 한 줄로 */
 .next-only { display: none !important; }
 body.has-next .next-only { display: flex !important; }
-body.has-next .bar .hide-when-next { display: none; }
+body.has-next { --bar-h: 136px; }
+.bar .btn-next { grid-column: 1 / -1; order: -1; flex-direction: row; font-size: 16px; }
 .btn-next { background: #140d09; color: #f6ecdd; }
 .ended-box .btn-next { margin-top: 18px; background: #f6ecdd; color: #140d09; }
 .ended-box { padding: 40px 20px 32px; background: #140d09; color: #f6ecdd; }
