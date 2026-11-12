@@ -1,16 +1,14 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<meta name="referrer" content="no-referrer"><!-- 넘어간 페이지에 옛 주소(시술명)가 '어디서 왔나'로 남지 않게 -->
-<title>닥터멜락신의원 강남</title>
-<!-- 옛 주소(11-10까지). 랜딩은 시술명 없는 폴더 2611a/로 옮김(운영 점검 — 픽셀에 시술명 주소가 가지 않게). 광고 꼬리표(?utm_…)는 그대로 따라가요. 이 페이지엔 픽셀 없음 -->
-<script>location.replace("../2611a/" + location.search + location.hash);</script>
-<noscript><meta http-equiv="refresh" content="0; url=../2611a/"></noscript>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>닥터멜락신의원 강남</title>
+<script>
+// event.melaxin.kr은 2026-11-12에 clinic.melaxin.kr/event/로 이사 — 뒤 경로·?(광고 꼬리표)·# 그대로 넘김
+// 옛 시술명 폴더(lifting-2611/)는 바로 2611a/로
+(function () {
+  var path = location.pathname.replace(/^\/lifting-2611(\/|$)/, '/2611a/');
+  location.replace('https://clinic.melaxin.kr/event' + path + location.search + location.hash);
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=https://clinic.melaxin.kr/event/"></noscript>
 </head>
-<body>
-  <p><a href="../2611a/">닥터멜락신의원 이벤트 보기</a></p>
-</body>
-</html>
+<body><p><a href="https://clinic.melaxin.kr/event/">닥터멜락신의원 이벤트 보기</a></p></body></html>
